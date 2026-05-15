@@ -1,18 +1,19 @@
 import {FC} from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type PaginationProps = {
     current: number;
     totalPage: number;
-    onChange: (page: number) => void;
 };
 
-export const MyPagination: FC<PaginationProps> = ({current, totalPage, onChange}) => {
+export const MyPagination: FC<PaginationProps> = ({current, totalPage}) => {
+    const searchParams = useSearchParams();
+    const router = useRouter();
     const pages = Array.from({length: totalPage}, (_, i) => i + 1);
 
     const renderPages = () => {
         const first = pages.slice(0, 3);
         const last = pages.slice(-3);
-
 
         const start = Math.max(current - 1, 4);
         const end = Math.min(current + 1, totalPage - 3);
@@ -33,18 +34,24 @@ export const MyPagination: FC<PaginationProps> = ({current, totalPage, onChange}
         return result;
     };
 
+    const gotoPage = (page: number) => {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("page", page.toString());
+        router.push(`?${params.toString()}`);
+    }
+
     return (
         <div className="flex items-center space-x-2 mt-4 mb-4">
             <button
                 disabled={current === 1}
-                onClick={() => onChange(1)}
+                onClick={() => gotoPage(1)}
                 className="px-3 py-1 rounded disabled:opacity-50 uppercase text-purple-800"
             >
                 {"<<"}
             </button>
             <button
                 disabled={current === 1}
-                onClick={() => onChange(current - 1)}
+                onClick={() => gotoPage(current - 1)}
                 className="px-3 py-1 disabled:opacity-50 uppercase text-purple-800"
             >
                 {"< previous"}
@@ -58,7 +65,7 @@ export const MyPagination: FC<PaginationProps> = ({current, totalPage, onChange}
                     ) : (
                         <button
                             key={page}
-                            onClick={() => onChange(page as number)}
+                            onClick={() => gotoPage(page as number)}
                             className={`px-3 py-1 border-purple-500 border rounded-full ${
                                 page === current ? "bg-purple-500 text-white" : ""
                             }`}
@@ -70,7 +77,7 @@ export const MyPagination: FC<PaginationProps> = ({current, totalPage, onChange}
 
             <button
                 disabled={current === totalPage}
-                onClick={() => onChange(current + 1)}
+                onClick={() => gotoPage(current + 1)}
                 className="px-3 py-1 rounded disabled:opacity-50 uppercase text-purple-800"
             >
                 {"next >"}
@@ -78,7 +85,7 @@ export const MyPagination: FC<PaginationProps> = ({current, totalPage, onChange}
 
             <button
                 disabled={current === totalPage}
-                onClick={() => onChange(totalPage)}
+                onClick={() => gotoPage(totalPage)}
                 className="px-3 py-1 rounded disabled:opacity-50 uppercase text-purple-800"
             >
                 {">>"}
