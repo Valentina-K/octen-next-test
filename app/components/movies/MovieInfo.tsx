@@ -1,3 +1,4 @@
+'use client';
 import {IGenre} from "@/app/models/genre";
 import {PosterPreview} from "@/app/components/ui/poster/PosterPreview";
 import {IMovie} from "@/app/models/movie";

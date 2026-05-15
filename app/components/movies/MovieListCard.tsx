@@ -1,3 +1,4 @@
+'use client';
 import {colorClasses} from "@/app/constants/colors";
 import {GenreBadge} from "@/app/components/genres/GenreBages";
 import {IGenre} from "@/app/models/genre";

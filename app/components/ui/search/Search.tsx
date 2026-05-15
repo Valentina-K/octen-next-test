@@ -1,3 +1,4 @@
+'use client';
 import {useEffect, useRef, useState} from "react";
 import {CiSearch} from "react-icons/ci";
 import {IoCloseOutline} from "react-icons/io5";

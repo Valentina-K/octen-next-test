@@ -1,13 +1,14 @@
+'use client';
 import {GenreBadge} from "@/app/components/genres/GenreBages";
 import {colorClasses} from "@/app/constants/colors";
 import {IGenre} from "@/app/models/genre";
 import {FC, useEffect, useState} from "react";
 import {getGenres} from "@/app/services/api";
+import {useRouter, useSearchParams} from "next/navigation";
 
-type GenresProps = {
-    choiceGenreId: (id: number) => void;
-}
-export const GenresList: FC<GenresProps> = ({choiceGenreId}) => {
+export const GenresList: FC = () => {
+    const searchParams = useSearchParams();
+    const router = useRouter();
     const [genreId, setGenreId] = useState<number>(0);
     const [genres, setGenres] = useState<IGenre[]>([]);
     const [error, setError] = useState<boolean>(false);
@@ -26,11 +27,12 @@ export const GenresList: FC<GenresProps> = ({choiceGenreId}) => {
 
     const handleClick = (id: number) => {
         setGenreId(prevState => prevState === id ? 0 : id);
+        const params = new URLSearchParams(searchParams.toString());
+        const genreId: number = Number(params.get("genre")) || 0;
+        if(genreId === id) params.set("genre", "");
+        else params.set("genre", id.toString());
+        router.push(`?${params}`);
     }
-
-    useEffect(() => {
-        choiceGenreId(genreId);
-    }, [genreId, choiceGenreId])
 
     if (error) return <p>Error...</p>;
     return (
