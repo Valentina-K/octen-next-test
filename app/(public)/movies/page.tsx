@@ -1,5 +1,3 @@
-'use server';
-
 import {MovieList} from "@/app/components/movies/MovieList";
 import {Filters} from "@/app/components/filters/Filters";
 import {GenresList} from "@/app/components/genres/GenresList";
