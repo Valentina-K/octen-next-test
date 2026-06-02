@@ -8,6 +8,7 @@ export const PosterPreview = ({movie}: { movie: IMovie }) => {
                 src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
                 alt={movie.title}
                 className={`w-full h-full object-cover rounded-xl shadow-lg`}
+                fill={true}
             />
         </div>
     );

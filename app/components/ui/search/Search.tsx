@@ -1,8 +1,9 @@
 'use client';
 import {useEffect, useRef, useState} from "react";
+import Image from "next/image";
 import {CiSearch} from "react-icons/ci";
 import {IoCloseOutline} from "react-icons/io5";
-import { useRouter } from "next/navigation";
+import {useRouter} from "next/navigation";
 import {useDebounce} from "use-debounce";
 import {IMovie} from "@/app/models/movie";
 import {getMovieBySearch} from "@/app/services/api";
@@ -18,25 +19,23 @@ export const Search = () => {
     const router = useRouter();
 
     useEffect(() => {
-        const fetchMovies = async() => {
+        const fetchMovies = async () => {
             if (!debouncedSearch) {
                 setMovies([]);
                 return;
             }
             setLoading(true);
-            try{
+            try {
                 const data: IMovie[] = await getMovieBySearch(debouncedSearch) as IMovie[];
                 setMovies(data);
-            }
-            catch{
+            } catch {
                 setError(true);
-            }
-            finally {
+            } finally {
                 setLoading(false);
             }
         }
         fetchMovies();
-    },[debouncedSearch]);
+    }, [debouncedSearch]);
 
     const handleSearch = () => {
         setIsOpen(true);
@@ -49,7 +48,7 @@ export const Search = () => {
     }
     const gotoSearch = (movieId: number) => {
         handleClose();
-        router.push(`./movies/${movieId}`)
+        router.push(`/movies/${movieId}`)
     }
 
     if (error) return <p>Ups...</p>
@@ -68,7 +67,8 @@ export const Search = () => {
                                 onClick={handleClose}/>
             </div>
             {isOpen && (
-                <div className="absolute top-full left-0 w-full z-10 bg-white shadow-lg rounded-md mt-1 max-h-64 overflow-y-auto">
+                <div
+                    className="absolute top-full left-0 w-full z-10 bg-white shadow-lg rounded-md mt-1 max-h-64 overflow-y-auto">
                     {loading && <p className="p-2">Loading...</p>}
                     {!loading && movies.length > 0 && (
                         <ul>
@@ -82,6 +82,8 @@ export const Search = () => {
                                     <span className="text-sm text-gray-500 ml-2">
                     {movie.release_date?.slice(0, 4)}
                   </span>
+                                    <Image src={`https://image.tmdb.org/t/p/w92${movie.poster_path ? movie.poster_path : movie.backdrop_path}`} alt={movie.title}
+                                           width={92} height={Math.round(92 * 1.5)}/>
                                 </li>
                             ))}
                         </ul>

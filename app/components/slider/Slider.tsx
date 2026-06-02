@@ -32,10 +32,11 @@ export const Slider = ({movies}: { movies: IMovie[] }) => {
                     >
                         <div onClick={()=> {
                             if((step + angle) % 360 === 0) router.push(`./movies/${movie.id}`)
-                        }}>
+                        }} >
                             <Image
                                 src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
                                 alt={movie.title}
+                                fill={true}
                                 className={`w-full h-full rounded ${
                                     (step + angle) % 360 === 0
                                         ? "grayscale-0 opacity-100 cursor-pointer"

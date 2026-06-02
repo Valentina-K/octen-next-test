@@ -20,7 +20,6 @@ export const MovieInfo = ({movie}: { movie: IMovie }) => {
         }
         fetchGenres();
     }, [])
-
     const movieGenres: IGenre[] =
         movie.genre_ids ?
             genres.filter((g: IGenre) => movie.genre_ids?.includes(g.id))

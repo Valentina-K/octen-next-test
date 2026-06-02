@@ -19,7 +19,7 @@ export const MovieList: FC<MovieListProps> = async ({filter, genreId = "", page}
         <section className={'flex justify-center flex-col items-center'}>
             <div className={'flex flex-wrap gap-5 justify-center'}>
                 {response?.results.slice(0, 60).map((movie: IMovie) =>
-                    <Link href={`/movies/:${movie.id}`} key={movie.id}>
+                    <Link href={`/movies/${movie.id}`} key={movie.id}>
                         <MovieInfo movie={movie}/>
                     </Link>)}
             </div>

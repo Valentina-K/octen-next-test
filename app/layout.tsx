@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import {Suspense} from "react";
+import React, {Suspense} from "react";
 import Loader from "@/app/components/ui/loader/Loader";
 import {Header} from "@/app/layouts/header/Header";
 
